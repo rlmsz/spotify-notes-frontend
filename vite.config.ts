@@ -7,6 +7,13 @@ export default defineConfig(({ mode }) => {
   // Load env file based on `mode` in the current directory.
   const env = loadEnv(mode, process.cwd(), '');
   const base = env.VITE_BASE_URL || '/';
+  
+  // Log environment variables for debugging (remove in production)
+  console.log('Environment variables:', {
+    VITE_BASE_URL: env.VITE_BASE_URL,
+    VITE_SPOTIFY_REDIRECT_URI: env.VITE_SPOTIFY_REDIRECT_URI,
+    VITE_API_URL: env.VITE_API_URL
+  });
 
   return {
     base: base,
@@ -37,7 +44,7 @@ export default defineConfig(({ mode }) => {
       strictPort: true,
       proxy: {
         '/api': {
-          target: 'http://localhost:5000',
+          target: 'https://spotify-notes-backend-akzwztap9-rlmszs-projects.vercel.app',
           changeOrigin: true,
           secure: false,
           ws: true,

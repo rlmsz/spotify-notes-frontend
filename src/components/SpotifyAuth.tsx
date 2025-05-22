@@ -19,7 +19,12 @@ const SpotifyAuth: React.FC = () => {
     const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
     
     // Must match exactly what's in your Spotify Dashboard
-    const redirectUri = 'http://127.0.0.1:5173/callback';
+    const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
+    
+    if (!redirectUri) {
+      console.error('VITE_SPOTIFY_REDIRECT_URI is not set in environment variables');
+      return;
+    }
     
     // Generate random state
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

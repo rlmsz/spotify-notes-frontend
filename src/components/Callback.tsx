@@ -53,7 +53,7 @@ const Callback: React.FC = () => {
 
         // Exchange code for tokens
         console.log("Exchanging code for tokens...");
-        const response = await axios.post('http://localhost:5000/api/spotify/token', { code });
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/spotify/token`, { code });
         
         const { 
           access_token, 
