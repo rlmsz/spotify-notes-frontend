@@ -2,9 +2,20 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
-// https://vite.dev/config/
-export default defineConfig({
+// https://vite.dev/config/ 
+export default defineConfig(() => {
+  // Load env file based on `mode` in the current directory.
+  // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
+  
+  return {
+  base: './',
   plugins: [react(), tailwindcss()],
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false,
+    minify: 'esbuild',
+  },
   server: {
     host: '0.0.0.0', // This allows access via IP address
     port: 5173,
@@ -30,6 +41,7 @@ export default defineConfig({
         },
         rewrite: (path) => path.replace(/^\/api/, '/api')
       }
+    }
     }
   }
 })
