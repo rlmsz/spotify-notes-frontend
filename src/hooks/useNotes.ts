@@ -1,12 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import type { Note } from '../types';
+import type { NoteType } from '../types';
 import { backendApi } from '../services/api';
 
 export const useNotes = (trackId?: string) => {
   const queryClient = useQueryClient();
 
   // Fetch notes for the current track
-  const { data: notes = [], isLoading } = useQuery<Note[]>({
+  const { data: notes = [], isLoading } = useQuery<NoteType[]>({
     queryKey: ['notes', trackId],
     queryFn: async () => {
       if (!trackId) return [];
