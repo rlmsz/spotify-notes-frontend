@@ -1,13 +1,15 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  const isProduction = mode === 'production';
+  // Load env file based on `mode` in the current directory.
+  const env = loadEnv(mode, process.cwd(), '');
+  const base = env.VITE_BASE_URL || '/';
 
   return {
-    base: isProduction ? '/' : '/',
+    base: base,
     define: {
       'process.env.NODE_ENV': `"${mode}"`
     },
@@ -15,8 +17,11 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: 'dist',
       assetsDir: 'assets',
+      assetsInlineLimit: 0,
       sourcemap: false,
-      minify: 'esbuild',
+      minify: 'terser',
+      emptyOutDir: true,
+      chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
           manualChunks: {
